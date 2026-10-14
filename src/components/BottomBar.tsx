@@ -1,4 +1,4 @@
-import { Shield, Locate, Clock, Moon, Sun, Lightbulb, LightbulbOff, ShieldAlert, Video } from 'lucide-react';
+import { Shield, Locate, Clock, Moon, Sun, Lightbulb, LightbulbOff, ShieldAlert, Video, Sparkles } from 'lucide-react';
 
 export default function BottomBar({ 
   nightMode, 
@@ -11,7 +11,8 @@ export default function BottomBar({
   isDrillActive,
   onToggleDrill,
   showSecurityPip,
-  setShowSecurityPip
+  setShowSecurityPip,
+  onToggleAICopilot
 }: any) {
   return (
     <div className="panel bottom-bar">
@@ -50,6 +51,20 @@ export default function BottomBar({
           <Locate size={16} /> Reset View
         </button>
       </div>
+
+      {/* AI Copilot Inline Pill - between buttons and status */}
+      <button 
+        className="bottom-bar-ai-pill"
+        onClick={onToggleAICopilot}
+        title="Campus AI Copilot (Double-press 'Z')"
+      >
+        <div className="bottom-bar-ai-orb">
+          <Sparkles size={11} color="#fff" />
+        </div>
+        <span className="bottom-bar-ai-label">AI Copilot</span>
+        <span className="bottom-bar-ai-shortcut">2x Z</span>
+      </button>
+
       <div style={{ display: 'flex', gap: '24px', color: 'var(--text-muted)', fontSize: '0.9rem', paddingLeft: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Shield size={16} color="#34c759" />

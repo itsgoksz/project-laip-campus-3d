@@ -5,6 +5,7 @@ import SceneViewer from './SceneViewer';
 import BottomBar from './BottomBar';
 import DrillController from './fireSafety/DrillController';
 import SecurityCameraPip from './security/SecurityCameraPip';
+import CampusAICopilot from './ai/CampusAICopilot';
 import { CAMERAS } from './security/SurveillancePins3D';
 import { initialExtinguisherData } from '../data/fireSafetyData';
 import type { FireExtinguisherDetails, InspectionRecord } from '../types/fireSafety';
@@ -18,6 +19,9 @@ export default function CommandCenter() {
   const [showCoverage, setShowCoverage] = useState(true);
   const [isDrillActive, setIsDrillActive] = useState(false);
   const [drillSeconds, setDrillSeconds] = useState(0);
+
+  // AI Copilot visibility (controlled from BottomBar pill & double-Z shortcut)
+  const [aiCopilotVisible, setAiCopilotVisible] = useState(false);
 
   // Smart Security Surveillance PiP State (Only activated in Security Feeds mode)
   const [showSecurityPip, setShowSecurityPip] = useState(false);
@@ -157,6 +161,21 @@ export default function CommandCenter() {
         onToggleDrill={handleToggleDrill}
         showSecurityPip={showSecurityPip}
         setShowSecurityPip={setShowSecurityPip}
+        onToggleAICopilot={() => setAiCopilotVisible(prev => !prev)}
+      />
+
+      {/* Floating Dynamic Island AI Copilot Layer (Double-press 'Z' or bottom pill) */}
+      <CampusAICopilot 
+        isVisible={aiCopilotVisible}
+        setIsVisible={setAiCopilotVisible}
+        context={{
+          fireSafetyData,
+          onUpdateFireSafetyData: setFireSafetyData,
+          setActiveAsset,
+          setViewMode,
+          lightsOn,
+          setLightsOn,
+        }}
       />
 
       {/* Picture-in-Picture Smart Security & Drone Surveillance HUD */}
